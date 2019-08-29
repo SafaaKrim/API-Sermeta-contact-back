@@ -1,27 +1,20 @@
-const entreprise = require('../models/entreprise.model.js');
+const Entreprises = require('../models/entreprise.model.js');
 
 // Create and Save a new entreprise
 exports.create = (req, res) => {
-    // Validate request
-    if(!req.body.content) {
-        return res.status(400).send({
-            message: "entreprise content can not be empty"
-        });
-    }
-
-    // Create a entreprise
-    const entreprise = new entreprise({
+   // Create a entreprise
+    const entreprises = new Entreprises({
         dénomination: req.body.dénomination ,
         finalité: req.body.finalité,
         taille: req.body.taille,
         statut_juridique: req.body.statut_juridique,
         natinalité: req.body.natinalité,
         ville: req.body.ville,
-        contact: req.body.contact
+        entreprise: req.body.entreprise
     });
 
     // Save entreprise in the database
-    entreprise.save()
+    entreprises.save()
     .then(data => {
         res.send(data);
     }).catch(err => {
@@ -33,7 +26,7 @@ exports.create = (req, res) => {
 
 // Retrieve and return all entreprises from the database.
 exports.findAll = (req, res) => {
-    entreprise.find()
+    Entreprises.find()
     .then(entreprises => {
         res.send(entreprises);
     }).catch(err => {
@@ -45,14 +38,14 @@ exports.findAll = (req, res) => {
 
 // Find a single entreprise with a entrepriseId
 exports.findOne = (req, res) => {
-    entreprise.findById(req.params.entrepriseId)
-    .then(entreprise => {
-        if(!entreprise) {
+    Entreprises.findById(req.params.entrepriseId)
+    .then(entreprises => {
+        if(!entreprises) {
             return res.status(404).send({
                 message: "entreprise not found with id " + req.params.entrepriseId
             });            
         }
-        res.send(entreprise);
+        res.send(entreprises);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -66,45 +59,28 @@ exports.findOne = (req, res) => {
 };
 // Update a entreprise identified by the entrepriseId in the request
 exports.update = (req, res) => {
-    // Validate Request
-    if(!req.body.content) {
-        return res.status(400).send({
-            message: "entreprise content can not be empty"
-        });
-    }
-
-    // Find entreprise and update it with the request body
-    entreprise.findByIdAndUpdate(req.params.entrepriseId, {
-        denomination: req.body.denomination ,
-        finalité: req.body.finalité,
-        taille: req.body.taille,
-        statut_juridique: req.body.tatut_juridique,
-        natinalité: req.body.natinalité,
-        ville: req.body.ville,
-        contact: req.body.contact
-    }, {new: true})
-    .then(entreprise => {
-        if(!entreprise) {
-            return res.status(404).send({
-                message: "entreprise not found with id " + req.params.entrepriseId
-            });
-        }
-        res.send(entreprise);
-    }).catch(err => {
-        if(err.kind === 'ObjectId') {
-            return res.status(404).send({
-                message: "entreprise not found with id " + req.params.entrepriseId
-            });                
-        }
-        return res.status(500).send({
-            message: "Error updating entreprise with id " + req.params.entrepriseId
-        });
-    });
-};
-
+    Entreprises.updateOne(req.params.entrepriseID)
+     .then(entreprises => {
+         if(!entreprises) {
+             return res.status(404).send({
+                 message: "entreprise not found with id " + req.params.entrepriseId
+             });
+         }
+         res.send(entreprise);
+     }).catch(err => {
+         if(err.kind === 'ObjectId') {
+             return res.status(404).send({
+                 message: "entreprise not found with id " + req.params.entrepriseId
+             });                
+         }
+         return res.status(500).send({
+             message: "Error updating entreprise with id " + req.params.entrepriseId
+         });
+     });
+ };
 // Delete a entreprise with the specified entrepriseId in the request
 exports.delete = (req, res) => {
-    entreprise.findByIdAndRemove(req.params.entrepriseId)
+    Entreprise.findByIdAndRemove(req.params.entrepriseId)
     .then(entreprise => {
         if(!entreprise) {
             return res.status(404).send({
