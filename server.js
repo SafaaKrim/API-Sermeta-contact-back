@@ -1,9 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// create express app
-const app = express();
+var cors = require('cors');
 
+// create express app
+var app = express();
+
+//app.use(cors());
+app.use(cors({origin: 'http://localhost:4200' }));
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header('Access-Control-Allow-Methods', 'DELETE, PUT, GET, POST');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+ })
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 

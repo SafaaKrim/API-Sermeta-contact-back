@@ -4,11 +4,11 @@ const Entreprises = require('../models/entreprise.model.js');
 exports.create = (req, res) => {
    // Create a entreprise
     const entreprises = new Entreprises({
-        dénomination: req.body.dénomination ,
-        finalité: req.body.finalité,
+        denomination: req.body.denomination ,
+        finalite: req.body.finalite,
         taille: req.body.taille,
         statut_juridique: req.body.statut_juridique,
-        natinalité: req.body.natinalité,
+        natinalite: req.body.natinalite,
         ville: req.body.ville,
         entreprise: req.body.entreprise
     });
