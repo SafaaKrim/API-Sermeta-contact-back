@@ -9,7 +9,7 @@ exports.create = (req, res) => {
    prenom : req.body.prenom,
    sexe : req.body.sexe,
    adresse_mail : req.body.adresse_mail,
-   téléphone : req.body.téléphone,
+   telephone : req.body.telephone,
    ville : req.body.ville,
    entreprise : req.body.entreprise  
  });
