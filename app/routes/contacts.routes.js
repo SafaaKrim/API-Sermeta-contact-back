@@ -1,5 +1,5 @@
 module.exports = (app) => {
-//const contacts = require('../controllers/contact.controller.js');
+
 const contacts = require('../controllers/contact.controller');
 
     // Create a new contact

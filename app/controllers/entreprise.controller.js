@@ -67,26 +67,29 @@ exports.update = (req, res) => {
     console.log("Updating using entreprise id:", entrepriseId); 
     Entreprises.updateOne({
         _id :  entrepriseId
-    },boby)
-     .then(entreprises => {
-         if(!entreprises) {
+    },body)
+     .then(updatedEnterprise => {
+         if(!updatedEnterprise) {
              return res.status(404).send({
-                 message: "entreprise not found with id " + req.params.entrepriseId
+                 message: "entreprise not found with id " + entrepriseId
              });
          }
-         res.send(entreprises);
+         res.send(updatedEnterprise);
      }).catch(err => {
          
-         return res.status(500).send(err);
+        return res.status(500).send(err);
              
          });
    
  };
 // Delete a entreprise with the specified entrepriseId in the request
 exports.delete = (req, res) => {
-    Entreprise.findByIdAndRemove(req.params.entrepriseId)
-    .then(entreprise => {
-        if(!entreprise) {
+    if (!req.params.entrepriseId) return res.status(404).send({
+        message: "Missing parameter enterprise Id "
+    });
+    Entreprises.findByIdAndRemove(req.params.entrepriseId)
+    .then(deletedEnterprise => {
+        if(!deletedEnterprise) {
             return res.status(404).send({
                 message: "entreprise not found with id " + req.params.entrepriseId
             });

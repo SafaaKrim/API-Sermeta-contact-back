@@ -78,6 +78,7 @@ exports.update = (req, res) => {
         }
         res.send(contacts);
     }).catch(err => {
+        
         return res.status(500).send(err);
     });
 };
